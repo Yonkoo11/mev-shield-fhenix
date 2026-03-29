@@ -43,6 +43,9 @@ const config: HardhatUserConfig = {
 			'arb-sepolia': process.env.ARBISCAN_API_KEY || '',
 		},
 	},
+	sourcify: {
+		enabled: true,
+	},
 }
 
 export default config

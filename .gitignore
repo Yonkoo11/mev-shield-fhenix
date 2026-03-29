@@ -18,3 +18,6 @@ app-src/.next/
 contracts/pnpm-lock.yaml
 settler/package-lock.json
 app/bun.lock
+
+# Local Netlify folder
+.netlify
