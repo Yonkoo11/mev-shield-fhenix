@@ -1,0 +1,20 @@
+{
+  "name": "mev-shield-fhenix-settler",
+  "version": "0.1.0",
+  "description": "Settlement bot for MEV Shield Fhenix batch auctions",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "npx tsx src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "tsx": "^4.7.0",
+    "@types/node": "^20.12.0"
+  }
+}

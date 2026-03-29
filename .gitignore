@@ -1,0 +1,20 @@
+node_modules/
+.env
+.env.local
+artifacts/
+cache/
+typechain-types/
+coverage/
+deployments/localcofhe/
+
+# Build output
+app/out/
+app/.next/
+app-src/out/
+app-src/.next/
+*.tsbuildinfo
+
+# Lock files (platform-specific)
+contracts/pnpm-lock.yaml
+settler/package-lock.json
+app/bun.lock
