@@ -25,11 +25,18 @@
 - Opened batch #2, graceful shutdown on SIGTERM
 - Health checks all pass (RPC, balance, contract, duration)
 
-### Frontend - DONE, VERIFIED
-- Dev server: `bun next dev` renders correctly (screenshot taken)
-- 0 TS errors
-- Connect Wallet, Deposit, Order, Batch Timer, Results with Claim Fill UI all present
+### Frontend - REDESIGNED (Signal & Noise theme, 2026-03-30)
+- **Live:** https://yonkoo11.github.io/mev-shield-fhenix/
+- **Hosting:** GitHub Pages (gh-pages branch), NOT Netlify
+- **Design:** "Signal & Noise" - monospace identity, noise-to-signal animation
+- **Palette:** dark bg (#0b0d11) + green signal (#00ffa3) + pink noise (#ff3366)
+- **Fonts:** Space Mono (headings/brand) + Inter (body)
+- **Signature element:** NoiseAnimation.tsx - random chars resolve to clearing price (6.8s cycle)
+- **Fixed:** duplicate connect wallet buttons (was one per discovered connector)
+- **basePath:** /mev-shield-fhenix in next.config.js
+- Connected-state components styled but not visually verified with wallet
 
 ### Dev Server Note
 - Use `bun next dev`. `npx next dev` hangs due to Node module resolution on wagmi+walletconnect dep tree.
 - First compile ~90s, subsequent loads ~4s.
+- After `bun install`, node_modules sometimes gets wiped on branch switch. Re-run `bun install` if `next build` says "no such file".
