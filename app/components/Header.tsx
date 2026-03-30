@@ -57,17 +57,12 @@ export function Header() {
             </button>
           </div>
         ) : (
-          <div className="hidden sm:flex gap-2">
-            {connectors.map((connector) => (
-              <button
-                key={connector.uid}
-                onClick={() => connect({ connector })}
-                className="font-mono text-xs tracking-[0.1em] uppercase text-shield-accent border border-shield-accent/40 rounded px-5 py-2.5 hover:bg-shield-accent hover:text-shield-bg transition-all"
-              >
-                Connect Wallet
-              </button>
-            ))}
-          </div>
+          <button
+            onClick={() => connectors[0] && connect({ connector: connectors[0] })}
+            className="font-mono text-xs tracking-[0.1em] uppercase text-shield-accent border border-shield-accent/40 rounded px-5 py-2.5 hover:bg-shield-accent hover:text-shield-bg transition-all"
+          >
+            Connect Wallet
+          </button>
         )}
       </div>
     </header>

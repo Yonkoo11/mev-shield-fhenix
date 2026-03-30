@@ -54,17 +54,12 @@ export default function Home() {
                   <span className="text-shield-accent font-medium">indistinguishable from random</span>.
                   Only the fair price survives.
                 </p>
-                <div className="flex gap-3">
-                  {connectors.map((connector) => (
-                    <button
-                      key={connector.uid}
-                      onClick={() => connect({ connector })}
-                      className="font-mono text-sm tracking-[0.08em] uppercase font-bold bg-shield-accent text-shield-bg rounded px-7 py-3.5 hover:bg-shield-accent/90 transition-colors"
-                    >
-                      Connect Wallet
-                    </button>
-                  ))}
-                </div>
+                <button
+                  onClick={() => connectors[0] && connect({ connector: connectors[0] })}
+                  className="font-mono text-sm tracking-[0.08em] uppercase font-bold bg-shield-accent text-shield-bg rounded px-7 py-3.5 hover:bg-shield-accent/90 transition-colors"
+                >
+                  Connect Wallet
+                </button>
               </div>
 
               {/* Right: noise animation */}
