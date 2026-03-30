@@ -98,7 +98,7 @@ export default function Home() {
           </section>
 
           {/* ── FEATURES ── */}
-          <section className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+          <section className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
             {/* Large feature: Encrypted Batch Auctions */}
             <div
               className="lg:col-span-3 bg-shield-card border-l-[3px] border-l-shield-accent border border-shield-border rounded p-6 md:p-8 animate-stagger-in"
@@ -181,7 +181,7 @@ export default function Home() {
             <h2 className="font-mono text-xl font-bold uppercase tracking-[0.08em] mb-8">
               How It Works
             </h2>
-            <div className="max-w-lg mx-auto bg-shield-card border border-shield-border rounded p-6">
+            <div className="max-w-2xl mx-auto bg-shield-card border border-shield-border rounded p-6 md:p-8">
               <div className="font-mono text-sm space-y-0">
                 {[
                   { cmd: "deposit tokens", desc: "Fund your shielded balance" },
