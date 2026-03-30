@@ -2,7 +2,7 @@
 
 **Trade without MEV.** FHE-encrypted batch auctions where orders are sealed with homomorphic encryption. Not even the contract can see your intent.
 
-**[Live App](https://mev-shield-fhenix.netlify.app)** | **[Contract on Arbiscan](https://sepolia.arbiscan.io/address/0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140)** | **[Sourcify](https://repo.sourcify.dev/contracts/full_match/421614/0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140/)**
+**[Live App](https://yonkoo11.github.io/mev-shield-fhenix/)** | **[Contract on Arbiscan](https://sepolia.arbiscan.io/address/0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140)** | **[Sourcify](https://repo.sourcify.dev/contracts/full_match/421614/0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140/)**
 
 Built on [Fhenix CoFHE](https://www.fhenix.io/) for the Private By Design dApp Buildathon.
 
