@@ -91,30 +91,90 @@ export function DepositPanel() {
   if (!isConnected) return null;
 
   return (
-    <div className="bg-shield-card border border-shield-border rounded-xl p-5">
-      <div className="flex gap-1 bg-shield-bg rounded-lg p-1 mb-4">
-        <button onClick={() => { setMode("deposit"); setApprovalStep("idle"); }} className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-colors ${mode === "deposit" ? "bg-shield-accent/20 text-shield-accent" : "text-shield-muted hover:text-shield-text"}`}>Deposit</button>
-        <button onClick={() => { setMode("withdraw"); setApprovalStep("idle"); }} className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-colors ${mode === "withdraw" ? "bg-shield-red/20 text-shield-red" : "text-shield-muted hover:text-shield-text"}`}>Withdraw</button>
+    <div className="bg-shield-card card-glow rounded p-5">
+      <div className="flex gap-1 bg-shield-bg rounded p-1 mb-4">
+        <button
+          onClick={() => { setMode("deposit"); setApprovalStep("idle"); }}
+          className={`flex-1 py-2 rounded font-mono text-xs tracking-wider uppercase transition-colors ${
+            mode === "deposit" ? "bg-shield-accent/15 text-shield-accent" : "text-shield-muted hover:text-shield-text"
+          }`}
+        >
+          Deposit
+        </button>
+        <button
+          onClick={() => { setMode("withdraw"); setApprovalStep("idle"); }}
+          className={`flex-1 py-2 rounded font-mono text-xs tracking-wider uppercase transition-colors ${
+            mode === "withdraw" ? "bg-shield-pink/15 text-shield-pink" : "text-shield-muted hover:text-shield-text"
+          }`}
+        >
+          Withdraw
+        </button>
       </div>
       <div className="space-y-3">
         <div>
           <div className="flex items-center justify-between">
-            <label className="text-xs text-shield-muted">{TOKEN_A_DISPLAY} Amount</label>
-            {mode === "deposit" && <button onClick={() => setAmountA(parseFloat(formatUnits(walletBalA, TOKEN_DECIMALS)).toString())} className="text-[10px] text-shield-accent hover:text-shield-accent/80">Max: {fmt(walletBalA)}</button>}
+            <label className="font-mono text-[10px] tracking-wider uppercase text-shield-muted">
+              {TOKEN_A_DISPLAY} Amount
+            </label>
+            {mode === "deposit" && (
+              <button
+                onClick={() => setAmountA(parseFloat(formatUnits(walletBalA, TOKEN_DECIMALS)).toString())}
+                className="font-mono text-[10px] text-shield-accent hover:text-shield-accent/80 tracking-wider uppercase"
+              >
+                Max: {fmt(walletBalA)}
+              </button>
+            )}
           </div>
-          <input type="number" value={amountA} onChange={(e) => setAmountA(e.target.value)} placeholder="0.00" className="w-full mt-1 bg-shield-bg border border-shield-border rounded-lg px-3 py-2 text-base font-mono focus:outline-none focus:border-shield-accent" />
-          {aExceedsBalance && <p className="text-[10px] text-shield-red mt-1">Exceeds wallet balance</p>}
+          <input
+            type="number"
+            value={amountA}
+            onChange={(e) => setAmountA(e.target.value)}
+            placeholder="0.00"
+            className="w-full mt-1.5 bg-shield-bg border border-shield-border rounded px-3 py-2.5 text-base font-mono tabular-nums focus:outline-none focus:border-shield-accent/50 text-shield-text placeholder:text-shield-static"
+          />
+          {aExceedsBalance && (
+            <p className="font-mono text-[10px] text-shield-pink mt-1 uppercase tracking-wider">Exceeds wallet balance</p>
+          )}
         </div>
         <div>
           <div className="flex items-center justify-between">
-            <label className="text-xs text-shield-muted">{TOKEN_B_DISPLAY} Amount</label>
-            {mode === "deposit" && <button onClick={() => setAmountB(parseFloat(formatUnits(walletBalB, TOKEN_DECIMALS)).toString())} className="text-[10px] text-shield-accent hover:text-shield-accent/80">Max: {fmt(walletBalB)}</button>}
+            <label className="font-mono text-[10px] tracking-wider uppercase text-shield-muted">
+              {TOKEN_B_DISPLAY} Amount
+            </label>
+            {mode === "deposit" && (
+              <button
+                onClick={() => setAmountB(parseFloat(formatUnits(walletBalB, TOKEN_DECIMALS)).toString())}
+                className="font-mono text-[10px] text-shield-accent hover:text-shield-accent/80 tracking-wider uppercase"
+              >
+                Max: {fmt(walletBalB)}
+              </button>
+            )}
           </div>
-          <input type="number" value={amountB} onChange={(e) => setAmountB(e.target.value)} placeholder="0.00" className="w-full mt-1 bg-shield-bg border border-shield-border rounded-lg px-3 py-2 text-base font-mono focus:outline-none focus:border-shield-accent" />
-          {bExceedsBalance && <p className="text-[10px] text-shield-red mt-1">Exceeds wallet balance</p>}
+          <input
+            type="number"
+            value={amountB}
+            onChange={(e) => setAmountB(e.target.value)}
+            placeholder="0.00"
+            className="w-full mt-1.5 bg-shield-bg border border-shield-border rounded px-3 py-2.5 text-base font-mono tabular-nums focus:outline-none focus:border-shield-accent/50 text-shield-text placeholder:text-shield-static"
+          />
+          {bExceedsBalance && (
+            <p className="font-mono text-[10px] text-shield-pink mt-1 uppercase tracking-wider">Exceeds wallet balance</p>
+          )}
         </div>
-        <button onClick={handleSubmit} disabled={isPending || (!amountA && !amountB) || hasValidationError} className={`w-full py-2.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${mode === "deposit" ? "bg-shield-accent/10 text-shield-accent border border-shield-accent/30 hover:bg-shield-accent/20" : "bg-shield-red/10 text-shield-red border border-shield-red/30 hover:bg-shield-red/20"}`}>
-          {isPending ? (approvalStep === "approveA" ? `Approving ${TOKEN_A_DISPLAY}...` : approvalStep === "approveB" ? `Approving ${TOKEN_B_DISPLAY}...` : "Processing...") : mode === "deposit" ? "Deposit" : "Withdraw"}
+        <button
+          onClick={handleSubmit}
+          disabled={isPending || (!amountA && !amountB) || hasValidationError}
+          className={`w-full py-3 rounded font-mono text-sm tracking-wider uppercase font-bold transition-colors disabled:opacity-40 ${
+            mode === "deposit"
+              ? "bg-shield-accent/10 text-shield-accent border border-shield-accent/30 hover:bg-shield-accent/20"
+              : "bg-shield-pink/10 text-shield-pink border border-shield-pink/30 hover:bg-shield-pink/20"
+          }`}
+        >
+          {isPending
+            ? (approvalStep === "approveA" ? `Approving ${TOKEN_A_DISPLAY}...`
+              : approvalStep === "approveB" ? `Approving ${TOKEN_B_DISPLAY}...`
+              : "Processing...")
+            : mode === "deposit" ? "Deposit" : "Withdraw"}
         </button>
       </div>
     </div>

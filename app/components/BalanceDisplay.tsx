@@ -15,8 +15,8 @@ export function BalanceDisplay() {
   if (!isConnected) return null;
 
   return (
-    <div className="bg-shield-card border border-shield-border rounded-xl p-5">
-      <h3 className="text-sm font-medium text-shield-muted mb-4">
+    <div className="bg-shield-card card-glow rounded p-5">
+      <h3 className="font-mono text-xs tracking-wider uppercase text-shield-muted mb-4">
         Deposited Balance
       </h3>
       {loadA || loadB ? (
@@ -26,13 +26,13 @@ export function BalanceDisplay() {
         </div>
       ) : (
         <div className="space-y-3">
-          <div className="flex justify-between">
-            <span className="text-shield-muted text-sm">{TOKEN_A_DISPLAY}</span>
-            <span className="text-lg font-mono tabular-nums">{fmt(balA)}</span>
+          <div className="flex justify-between items-baseline">
+            <span className="font-mono text-xs tracking-wider uppercase text-shield-muted">{TOKEN_A_DISPLAY}</span>
+            <span className="text-xl font-mono font-bold tabular-nums">{fmt(balA)}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="text-shield-muted text-sm">{TOKEN_B_DISPLAY}</span>
-            <span className="text-lg font-mono tabular-nums">{fmt(balB)}</span>
+          <div className="flex justify-between items-baseline">
+            <span className="font-mono text-xs tracking-wider uppercase text-shield-muted">{TOKEN_B_DISPLAY}</span>
+            <span className="text-xl font-mono font-bold tabular-nums">{fmt(balB)}</span>
           </div>
         </div>
       )}

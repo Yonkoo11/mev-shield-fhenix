@@ -89,39 +89,52 @@ export function BatchTimer({ onBatchUpdate }: BatchTimerProps) {
   if (!isConnected) return null;
 
   return (
-    <div className="bg-shield-card border border-shield-border rounded-xl p-5">
+    <div className="bg-shield-card card-glow rounded p-5">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-medium text-shield-muted">
+        <h3 className="font-mono text-xs tracking-wider uppercase text-shield-muted">
           {currentBatchId && currentBatchId > 0n ? `Batch #${currentBatchId.toString()}` : "No Active Batch"}
         </h3>
-        <span className="text-xs text-shield-muted">{orderCount}/{maxOrders} orders</span>
+        <span className="font-mono text-[10px] text-shield-muted tracking-wide">{orderCount}/{maxOrders} orders</span>
       </div>
 
       {displayStatus === "open" && timeLeft !== null && timeLeft > 0 ? (
         <>
-          <div className="w-full h-2 bg-shield-bg rounded-full overflow-hidden mb-3">
-            <div className={`h-full rounded-full transition-[width] duration-1000 ease-out ${isUrgent ? "bg-shield-red" : "bg-shield-accent"}`} style={{ width: `${Math.min(progress, 100)}%` }} />
+          <div className="w-full h-1.5 bg-shield-bg rounded-full overflow-hidden mb-3">
+            <div
+              className={`h-full rounded-full transition-[width] duration-1000 ease-out ${isUrgent ? "bg-shield-pink" : "bg-shield-accent"}`}
+              style={{ width: `${Math.min(progress, 100)}%` }}
+            />
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-shield-muted">{isUrgent ? "Closing soon!" : "Accepting encrypted orders"}</span>
-            <span className={`text-2xl font-mono font-bold tabular-nums ${isUrgent ? "text-shield-red" : "text-shield-text"}`}>{timeLeft}s</span>
+            <span className="text-xs text-shield-muted">
+              {isUrgent ? (
+                <span className="text-shield-pink font-mono uppercase tracking-wider text-[10px]">Closing soon</span>
+              ) : (
+                "Accepting encrypted orders"
+              )}
+            </span>
+            <span className={`text-2xl font-mono font-bold tabular-nums ${isUrgent ? "text-shield-pink" : "text-shield-text"}`}>
+              {timeLeft}s
+            </span>
           </div>
         </>
       ) : displayStatus === "settling" ? (
         <div className="text-center py-3 space-y-2">
           <div className="flex items-center justify-center gap-2">
             <div className="w-2 h-2 rounded-full bg-shield-yellow animate-pulse" />
-            <span className="text-shield-yellow text-sm">Computing clearing price over encrypted orders...</span>
+            <span className="text-shield-yellow text-sm font-mono">Computing clearing price...</span>
           </div>
-          <p className="text-[10px] text-shield-muted">FHE settlement in progress. Decrypting result.</p>
+          <p className="font-mono text-[10px] text-shield-muted tracking-wide uppercase">
+            FHE settlement in progress
+          </p>
         </div>
       ) : displayStatus === "settled" ? (
         <div className="text-center py-2">
-          <span className="text-shield-accent text-sm">Batch settled</span>
+          <span className="text-shield-accent text-sm font-mono">Batch settled</span>
         </div>
       ) : (
         <div className="text-center py-2">
-          <span className="text-shield-muted text-sm">Waiting for next batch...</span>
+          <span className="text-shield-muted text-sm font-mono">Waiting for next batch...</span>
         </div>
       )}
     </div>

@@ -11,6 +11,7 @@ import { BatchResult } from "../components/BatchResult";
 import { BalanceDisplay } from "../components/BalanceDisplay";
 import { PrivacyBadge } from "../components/PrivacyBadge";
 import { FaucetPanel } from "../components/BridgePanel";
+import { NoiseAnimation } from "../components/NoiseAnimation";
 
 export default function Home() {
   const { isConnected } = useAccount();
@@ -29,104 +30,203 @@ export default function Home() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-[1200px] mx-auto px-6 md:px-8">
       <Header />
 
       {!isConnected ? (
-        <div className="mt-16 space-y-16">
-          <div className="text-center space-y-6">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
-              Trade without{" "}
-              <span className="text-shield-accent">MEV</span>
-            </h1>
-            <p className="text-shield-muted text-lg max-w-md mx-auto">
-              FHE-encrypted batch auctions. Orders sealed with homomorphic encryption.
-              Not even the contract can see your intent.
-            </p>
-            <div className="flex gap-3 justify-center pt-2">
-              {connectors.map((connector) => (
-                <button
-                  key={connector.uid}
-                  onClick={() => connect({ connector })}
-                  className="bg-shield-accent text-shield-bg font-semibold rounded-lg px-6 py-3 text-sm hover:bg-shield-accent/90 transition-colors"
-                >
-                  Connect Wallet
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Features */}
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              <div className="md:col-span-3 bg-shield-card border border-shield-border rounded-lg p-6 md:p-8 flex flex-col justify-between min-h-[200px]">
-                <div>
-                  <div className="text-shield-accent mb-4">
-                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">FHE-Encrypted Orders</h3>
-                  <p className="text-sm text-shield-muted leading-relaxed max-w-sm">
-                    Orders are encrypted with Fully Homomorphic Encryption.
-                    The clearing price is computed over ciphertext. Individual
-                    orders are never revealed to anyone.
-                  </p>
-                </div>
-                <div className="flex gap-6 mt-6 pt-4 border-t border-shield-border text-xs text-shield-muted">
-                  <span><span className="text-shield-accent font-mono font-bold text-base tabular-nums">8</span> max orders</span>
-                  <span><span className="text-shield-accent font-mono font-bold text-base tabular-nums">$0</span> MEV extracted</span>
-                  <span><span className="text-shield-accent font-mono font-bold text-base tabular-nums">FHE</span> privacy</span>
+        <div className="space-y-16 pb-20">
+          {/* ── HERO ── */}
+          <section className="scan-lines relative pt-12 md:pt-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left: headline */}
+              <div className="animate-fade-up">
+                <h1 className="font-mono text-4xl md:text-[56px] font-bold tracking-[0.04em] uppercase leading-[1.1] mb-6">
+                  Your trades{" "}
+                  <br className="hidden md:block" />
+                  are{" "}
+                  <span className="text-shield-pink">noise</span>
+                </h1>
+                <p className="text-shield-muted text-base md:text-lg leading-relaxed mb-2 max-w-md">
+                  Until the clearing price emerges.
+                </p>
+                <p className="text-base md:text-lg leading-relaxed max-w-md mb-8">
+                  FHE encryption makes your orders{" "}
+                  <span className="text-shield-accent font-medium">indistinguishable from random</span>.
+                  Only the fair price survives.
+                </p>
+                <div className="flex gap-3">
+                  {connectors.map((connector) => (
+                    <button
+                      key={connector.uid}
+                      onClick={() => connect({ connector })}
+                      className="font-mono text-sm tracking-[0.08em] uppercase font-bold bg-shield-accent text-shield-bg rounded px-7 py-3.5 hover:bg-shield-accent/90 transition-colors"
+                    >
+                      Connect Wallet
+                    </button>
+                  ))}
                 </div>
               </div>
-              <div className="md:col-span-2 flex flex-col gap-4">
-                <div className="flex-1 bg-shield-card border border-shield-border rounded-lg p-5">
-                  <div className="text-shield-accent mb-3">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                  </div>
-                  <h3 className="font-semibold text-sm mb-1">Uniform Clearing</h3>
-                  <p className="text-xs text-shield-muted leading-relaxed">
-                    Every order fills at the same price. Frontrunning is impossible by design.
-                  </p>
+
+              {/* Right: noise animation */}
+              <div className="animate-fade-up" style={{ animationDelay: "100ms" }}>
+                <NoiseAnimation />
+              </div>
+            </div>
+          </section>
+
+          {/* ── STATS BANNER ── */}
+          <section
+            className="bg-shield-card border border-shield-border rounded px-6 py-4 animate-fade-in"
+            style={{ animationDelay: "200ms" }}
+          >
+            <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs tracking-wider uppercase">
+              <div>
+                <span className="text-shield-muted">Batch Duration: </span>
+                <span className="text-shield-accent font-bold">60s</span>
+              </div>
+              <div className="hidden md:block w-px h-4 bg-shield-border" />
+              <div>
+                <span className="text-shield-muted">Max Orders: </span>
+                <span className="text-shield-accent font-bold">8</span>
+              </div>
+              <div className="hidden md:block w-px h-4 bg-shield-border" />
+              <div>
+                <span className="text-shield-muted">MEV Extracted: </span>
+                <span className="text-shield-pink font-bold">$0</span>
+              </div>
+              <div className="hidden md:block w-px h-4 bg-shield-border" />
+              <div>
+                <span className="text-shield-muted">Privacy: </span>
+                <span className="text-shield-accent font-bold">FHE</span>
+              </div>
+            </div>
+          </section>
+
+          {/* ── FEATURES ── */}
+          <section className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+            {/* Large feature: Encrypted Batch Auctions */}
+            <div
+              className="lg:col-span-3 bg-shield-card border-l-[3px] border-l-shield-accent border border-shield-border rounded p-6 md:p-8 animate-stagger-in"
+              style={{ animationDelay: "300ms" }}
+            >
+              <div className="font-mono text-[10px] tracking-[0.15em] uppercase text-shield-accent mb-3">
+                // Core Mechanism
+              </div>
+              <h3 className="font-mono text-lg font-bold uppercase tracking-wide mb-3">
+                Encrypted Batch Auctions
+              </h3>
+              <p className="text-sm text-shield-muted leading-relaxed mb-5 max-w-md">
+                Orders are encrypted client-side with Fhenix FHE before submission.
+                No one can see your intent, your price, or your size. The contract
+                processes sealed orders and computes a single clearing price homomorphically.
+              </p>
+
+              {/* Code block */}
+              <div className="bg-shield-bg rounded p-4 font-mono text-xs leading-relaxed">
+                <div className="text-shield-muted">
+                  <span className="text-shield-accent">&gt;</span> submit_order --encrypted
                 </div>
-                <div className="flex-1 bg-shield-card border border-shield-border rounded-lg p-5">
-                  <div className="text-shield-accent mb-3">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+                <div className="mt-1 pl-4 space-y-0.5">
+                  <div>
+                    tick: {"  "}
+                    <span className="bg-shield-static/40 text-shield-static px-1 rounded">0x████████</span>
                   </div>
-                  <h3 className="font-semibold text-sm mb-1">Trustless Privacy</h3>
-                  <p className="text-xs text-shield-muted leading-relaxed">
-                    No trusted operator. No private mempool. FHE eliminates the trust assumption entirely.
-                  </p>
+                  <div>
+                    amount:{" "}
+                    <span className="bg-shield-static/40 text-shield-static px-1 rounded">0x████████</span>
+                  </div>
+                  <div>
+                    status:{" "}
+                    <span className="text-shield-accent font-bold">SEALED ✓</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Flow */}
-          <div className="max-w-3xl mx-auto">
-            <div className="flex items-center justify-between gap-2 text-xs text-shield-muted">
-              {["Deposit", "Encrypt Order", "Batch Closes", "FHE Settlement", "Claim Fill"].map((step, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  {i > 0 && <div className="w-8 h-px bg-shield-border hidden md:block" />}
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-5 h-5 rounded-full bg-shield-accent/20 text-shield-accent font-mono text-[10px] flex items-center justify-center font-bold">{i + 1}</span>
-                    <span className="hidden md:inline">{step}</span>
-                  </div>
+            {/* Right stack */}
+            <div className="lg:col-span-2 flex flex-col gap-5">
+              <div
+                className="flex-1 bg-shield-card border-l-[3px] border-l-shield-accent border border-shield-border rounded p-5 animate-stagger-in"
+                style={{ animationDelay: "400ms" }}
+              >
+                <div className="font-mono text-[10px] tracking-[0.15em] uppercase text-shield-accent mb-2">
+                  // Fair Pricing
                 </div>
-              ))}
-            </div>
-          </div>
+                <h3 className="font-mono text-sm font-bold uppercase tracking-wide mb-2">
+                  Uniform Clearing
+                </h3>
+                <p className="text-xs text-shield-muted leading-relaxed">
+                  Every order in the batch fills at the same price. No advantage to speed,
+                  no advantage to information. The clearing price is computed over encrypted
+                  orders. You get the same deal as everyone else.
+                </p>
+              </div>
 
-          <PrivacyBadge />
+              <div
+                className="flex-1 bg-shield-card border-l-[3px] border-l-shield-pink border border-shield-border rounded p-5 animate-stagger-in"
+                style={{ animationDelay: "500ms" }}
+              >
+                <div className="font-mono text-[10px] tracking-[0.15em] uppercase text-shield-pink mb-2">
+                  // Protection
+                </div>
+                <h3 className="font-mono text-sm font-bold uppercase tracking-wide mb-2">
+                  Zero MEV
+                </h3>
+                <p className="text-xs text-shield-muted leading-relaxed">
+                  Frontrunning requires seeing orders. Sandwich attacks require knowing
+                  direction. When orders are FHE-encrypted, extractors see nothing.
+                  MEV extracted from your trades: zero.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* ── HOW IT WORKS ── */}
+          <section className="text-center">
+            <h2 className="font-mono text-xl font-bold uppercase tracking-[0.08em] mb-8">
+              How It Works
+            </h2>
+            <div className="max-w-lg mx-auto bg-shield-card border border-shield-border rounded p-6">
+              <div className="font-mono text-sm space-y-0">
+                {[
+                  { cmd: "deposit tokens", desc: "Fund your shielded balance" },
+                  { cmd: "encrypt order", desc: "FHE-seal your trade intent" },
+                  { cmd: "batch closes", desc: "Orders collect in a sealed batch" },
+                  { cmd: "fhe settlement", desc: "Clearing price computed on ciphertext" },
+                  { cmd: "claim fill", desc: "Withdraw filled tokens" },
+                ].map((step, i) => (
+                  <div
+                    key={step.cmd}
+                    className="flex items-center gap-3 py-2.5 border-b border-shield-border/30 last:border-0 animate-stagger-in"
+                    style={{ animationDelay: `${600 + i * 100}ms` }}
+                  >
+                    <span className="font-mono text-[10px] w-5 h-5 rounded bg-shield-accent/10 text-shield-accent flex items-center justify-center font-bold shrink-0">
+                      {i + 1}
+                    </span>
+                    <span className="text-shield-text text-left flex-1">{step.cmd}</span>
+                    <span className="text-shield-muted text-xs text-right hidden md:block">{step.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ── FOOTER ── */}
+          <footer className="border-t border-shield-border pt-6 pb-4">
+            <div className="flex flex-wrap items-center justify-center gap-3 font-mono text-xs tracking-wider uppercase text-shield-muted">
+              <span>MEVSHIELD</span>
+              <span className="text-shield-border">·</span>
+              <span>Fhenix</span>
+              <span className="text-shield-border">·</span>
+              <span>FHE-Encrypted Batch Auctions</span>
+            </div>
+          </footer>
         </div>
       ) : (
         <ChainGuard>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-            <div className="space-y-6 order-1 lg:order-2">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-6 pb-12">
+            {/* Center: timer + order form */}
+            <div className="space-y-5 order-1 lg:order-2">
               <BatchTimer onBatchUpdate={handleBatchUpdate} />
               <OrderForm
                 batchId={batchStatus === "open" ? activeBatchId : null}
@@ -134,12 +234,14 @@ export default function Home() {
                 tickSpacing={tickSpacing}
               />
             </div>
-            <div className="space-y-6 order-2 lg:order-1">
+            {/* Left: balances + deposit */}
+            <div className="space-y-5 order-2 lg:order-1">
               <BalanceDisplay />
               <DepositPanel />
               <FaucetPanel />
             </div>
-            <div className="space-y-6 order-3">
+            {/* Right: results + privacy */}
+            <div className="space-y-5 order-3">
               <BatchResult />
               <PrivacyBadge />
             </div>

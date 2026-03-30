@@ -18,7 +18,7 @@ export function OrderForm({ batchId, refPrice, tickSpacing }: OrderFormProps) {
   const { isConnected } = useAccount();
   const toast = useToast();
   const [side, setSide] = useState<"buy" | "sell">("buy");
-  const [tick, setTick] = useState(Math.floor(NUM_TICKS / 2)); // default to middle tick
+  const [tick, setTick] = useState(Math.floor(NUM_TICKS / 2));
   const [amount, setAmount] = useState("");
   const [encrypting, setEncrypting] = useState(false);
 
@@ -78,28 +78,49 @@ export function OrderForm({ batchId, refPrice, tickSpacing }: OrderFormProps) {
   if (!isConnected) return null;
 
   return (
-    <div className="bg-shield-card border border-shield-border rounded-xl p-5">
-      <h3 className="text-sm font-medium text-shield-muted mb-4">
-        Submit Encrypted Order {batchId !== null ? `(Batch #${batchId.toString()})` : ""}
+    <div className="bg-shield-card card-glow rounded p-5">
+      <h3 className="font-mono text-xs tracking-wider uppercase text-shield-muted mb-4">
+        {batchId !== null ? (
+          <>
+            <span className="text-shield-accent">&gt;</span> Submit Order{" "}
+            <span className="text-shield-accent">#{batchId.toString()}</span>
+          </>
+        ) : (
+          "Submit Encrypted Order"
+        )}
       </h3>
 
       {batchId === null ? (
-        <p className="text-shield-muted text-sm">Waiting for an open batch...</p>
+        <p className="text-shield-muted text-sm font-mono">Waiting for an open batch...</p>
       ) : (
         <>
           {/* FHE status */}
           {cofheState !== "ready" && (
-            <div className="mb-3 px-3 py-2 rounded-lg bg-shield-yellow/10 border border-shield-yellow/20 text-xs text-shield-yellow">
+            <div className="mb-3 px-3 py-2 rounded bg-shield-yellow/10 border border-shield-yellow/20 font-mono text-[10px] text-shield-yellow uppercase tracking-wider">
               {cofheState === "initializing" ? "Initializing FHE encryption..." : "Connect wallet to enable encryption"}
             </div>
           )}
 
           {/* Side toggle */}
-          <div className="flex gap-1 bg-shield-bg rounded-lg p-1 mb-4">
-            <button onClick={() => setSide("buy")} className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${side === "buy" ? "bg-shield-accent/20 text-shield-accent" : "text-shield-muted hover:text-shield-text"}`}>
+          <div className="flex gap-1 bg-shield-bg rounded p-1 mb-4">
+            <button
+              onClick={() => setSide("buy")}
+              className={`flex-1 py-2.5 rounded font-mono text-xs tracking-wider uppercase transition-colors ${
+                side === "buy"
+                  ? "bg-shield-accent/15 text-shield-accent"
+                  : "text-shield-muted hover:text-shield-text"
+              }`}
+            >
               Buy {TOKEN_A_DISPLAY}
             </button>
-            <button onClick={() => setSide("sell")} className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${side === "sell" ? "bg-shield-red/20 text-shield-red" : "text-shield-muted hover:text-shield-text"}`}>
+            <button
+              onClick={() => setSide("sell")}
+              className={`flex-1 py-2.5 rounded font-mono text-xs tracking-wider uppercase transition-colors ${
+                side === "sell"
+                  ? "bg-shield-pink/15 text-shield-pink"
+                  : "text-shield-muted hover:text-shield-text"
+              }`}
+            >
               Sell {TOKEN_A_DISPLAY}
             </button>
           </div>
@@ -107,9 +128,11 @@ export function OrderForm({ batchId, refPrice, tickSpacing }: OrderFormProps) {
           <div className="space-y-3">
             {/* Price tick slider */}
             <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="text-xs text-shield-muted">Price Level (tick {tick})</label>
-                <span className="text-xs font-mono text-shield-text">
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="font-mono text-[10px] tracking-wider uppercase text-shield-muted">
+                  Price Level (tick {tick})
+                </label>
+                <span className="font-mono text-xs text-shield-text tabular-nums">
                   {currentPrice > 0n ? `${formatPrice(currentPrice)} ${TOKEN_B_DISPLAY}/${TOKEN_A_DISPLAY}` : "..."}
                 </span>
               </div>
@@ -119,9 +142,9 @@ export function OrderForm({ batchId, refPrice, tickSpacing }: OrderFormProps) {
                 max={NUM_TICKS - 1}
                 value={tick}
                 onChange={(e) => setTick(Number(e.target.value))}
-                className="w-full h-2 bg-shield-bg rounded-lg appearance-none cursor-pointer accent-shield-accent"
+                className="w-full"
               />
-              <div className="flex justify-between text-[10px] text-shield-muted mt-1">
+              <div className="flex justify-between font-mono text-[9px] tracking-wider uppercase text-shield-muted mt-1">
                 <span>Low</span>
                 <span>High</span>
               </div>
@@ -129,7 +152,9 @@ export function OrderForm({ batchId, refPrice, tickSpacing }: OrderFormProps) {
 
             {/* Amount */}
             <div>
-              <label className="text-xs text-shield-muted">Amount ({TOKEN_A_DISPLAY})</label>
+              <label className="font-mono text-[10px] tracking-wider uppercase text-shield-muted">
+                Amount ({TOKEN_A_DISPLAY})
+              </label>
               <input
                 type="number"
                 value={amount}
@@ -137,33 +162,37 @@ export function OrderForm({ batchId, refPrice, tickSpacing }: OrderFormProps) {
                 placeholder="100.00"
                 min="0"
                 step="0.01"
-                className="w-full mt-1 bg-shield-bg border border-shield-border rounded-lg px-3 py-2 text-base font-mono focus:outline-none focus:border-shield-accent"
+                className="w-full mt-1.5 bg-shield-bg border border-shield-border rounded px-3 py-2.5 text-base font-mono tabular-nums focus:outline-none focus:border-shield-accent/50 text-shield-text placeholder:text-shield-static"
               />
-              {amountInvalid && <p className="text-[10px] text-shield-red mt-1">Amount must be greater than 0</p>}
+              {amountInvalid && (
+                <p className="font-mono text-[10px] text-shield-pink mt-1 uppercase tracking-wider">
+                  Amount must be greater than 0
+                </p>
+              )}
             </div>
 
             {/* Privacy notice */}
-            <div className="bg-shield-bg rounded-lg p-3 text-xs text-shield-muted space-y-1">
+            <div className="bg-shield-bg rounded p-3 font-mono text-[10px] tracking-wide text-shield-muted space-y-1.5">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-shield-accent" />
-                <span>Order will be encrypted with FHE before submission</span>
+                <span className="text-shield-accent">&gt;</span>
+                <span>Order encrypted with FHE before submission</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-shield-accent" />
-                <span>No one can see your price or amount until settlement</span>
+                <span className="text-shield-accent">&gt;</span>
+                <span>Price and amount hidden until settlement</span>
               </div>
             </div>
 
             <button
               onClick={handleSubmit}
               disabled={isPending || !amount || amountInvalid || cofheState !== "ready"}
-              className={`w-full py-3 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${
+              className={`w-full py-3 rounded font-mono text-sm tracking-wider uppercase font-bold transition-colors disabled:opacity-40 ${
                 side === "buy"
                   ? "bg-shield-accent text-shield-bg hover:bg-shield-accent/90"
-                  : "bg-shield-red text-white hover:bg-shield-red/90"
+                  : "bg-shield-pink text-white hover:bg-shield-pink/90"
               }`}
             >
-              {encrypting ? "Encrypting..." : isPending ? "Submitting..." : `${side === "buy" ? "Buy" : "Sell"} ${TOKEN_A_DISPLAY} (Encrypted)`}
+              {encrypting ? "Encrypting..." : isPending ? "Submitting..." : `${side === "buy" ? "Buy" : "Sell"} ${TOKEN_A_DISPLAY}`}
             </button>
           </div>
         </>

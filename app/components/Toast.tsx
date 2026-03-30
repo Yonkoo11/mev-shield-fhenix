@@ -39,37 +39,25 @@ function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: () => void }) 
   }, [onRemove]);
 
   const colors = {
-    success: "border-shield-accent/40 bg-shield-accent/10 text-shield-accent",
-    error: "border-shield-red/40 bg-shield-red/10 text-shield-red",
+    success: "border-shield-accent/30 bg-shield-accent/8 text-shield-accent",
+    error: "border-shield-pink/30 bg-shield-pink/8 text-shield-pink",
     info: "border-shield-border bg-shield-card text-shield-text",
   };
 
   const icons = {
-    success: (
-      <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-      </svg>
-    ),
-    error: (
-      <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    ),
-    info: (
-      <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+    success: "✓",
+    error: "✕",
+    info: "i",
   };
 
   return (
     <div
-      className={`flex items-center gap-2 px-4 py-3 rounded-lg border text-sm shadow-lg backdrop-blur-sm transition-all duration-200 ease-out ${
+      className={`flex items-center gap-3 px-4 py-3 rounded border text-sm backdrop-blur-sm transition-all duration-200 ease-out font-mono ${
         colors[toast.type]
       } ${visible ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
     >
-      {icons[toast.type]}
-      <span className="line-clamp-2">{toast.message}</span>
+      <span className="text-xs font-bold shrink-0">{icons[toast.type]}</span>
+      <span className="text-xs line-clamp-2">{toast.message}</span>
     </div>
   );
 }

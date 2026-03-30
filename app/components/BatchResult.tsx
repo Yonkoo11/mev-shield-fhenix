@@ -40,27 +40,27 @@ function UserOrderResult({ batchId }: { batchId: bigint }) {
   return (
     <div className="mt-2 pt-2 border-t border-shield-border">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-xs">
-          <div className="w-2 h-2 rounded-full bg-shield-accent" />
-          <span className="text-shield-accent font-medium">You had an order in this batch</span>
+        <div className="flex items-center gap-2 font-mono text-[10px] tracking-wider uppercase">
+          <span className="text-shield-accent">&gt;</span>
+          <span className="text-shield-accent">Your order</span>
         </div>
         {claimState === "unclaimed" && (
           <button
             onClick={handleClaim}
             disabled={isPending}
-            className="text-xs px-3 py-1 rounded-md bg-shield-accent/10 text-shield-accent border border-shield-accent/30 hover:bg-shield-accent/20 transition-colors disabled:opacity-50"
+            className="font-mono text-[10px] tracking-wider uppercase px-3 py-1.5 rounded bg-shield-accent/10 text-shield-accent border border-shield-accent/30 hover:bg-shield-accent/20 transition-colors disabled:opacity-40"
           >
             Claim Fill
           </button>
         )}
         {claimState === "requesting" && (
-          <span className="text-xs text-shield-muted">Decrypting fill...</span>
+          <span className="font-mono text-[10px] text-shield-muted tracking-wider uppercase">Decrypting...</span>
         )}
         {claimState === "claiming" && (
-          <span className="text-xs text-shield-muted">Claiming...</span>
+          <span className="font-mono text-[10px] text-shield-muted tracking-wider uppercase">Claiming...</span>
         )}
         {claimState === "claimed" && (
-          <span className="text-xs text-green-400 font-medium">Claimed</span>
+          <span className="font-mono text-[10px] text-shield-accent font-bold tracking-wider uppercase">Claimed ✓</span>
         )}
       </div>
     </div>
@@ -71,7 +71,6 @@ export function BatchResult() {
   const { isConnected } = useAccount();
   const { currentBatchId } = useCurrentBatchId();
 
-  // Show last 3 batches
   const id1 = currentBatchId !== undefined && currentBatchId > 0n ? currentBatchId : undefined;
   const id2 = currentBatchId !== undefined && currentBatchId > 1n ? currentBatchId - 1n : undefined;
   const id3 = currentBatchId !== undefined && currentBatchId > 2n ? currentBatchId - 2n : undefined;
@@ -88,7 +87,7 @@ export function BatchResult() {
   const settled: SettledInfo[] = [];
 
   const add = (b: typeof b1, id: bigint | undefined, cp: bigint | undefined) => {
-    if (b && (b.status === 3 || b.status === 4) && id !== undefined) { // 3 = Settled, 4 = Expired
+    if (b && (b.status === 3 || b.status === 4) && id !== undefined) {
       settled.push({ batchId: id, clearingPrice: cp ?? 0n, buyCount: b.buyCount, sellCount: b.sellCount });
     }
   };
@@ -100,22 +99,26 @@ export function BatchResult() {
   if (!isConnected) return null;
 
   return (
-    <div className="bg-shield-card border border-shield-border rounded-xl p-5">
-      <h3 className="text-sm font-medium text-shield-muted mb-4">Settled Batches</h3>
+    <div className="bg-shield-card card-glow rounded p-5">
+      <h3 className="font-mono text-xs tracking-wider uppercase text-shield-muted mb-4">Settled Batches</h3>
       <div className="space-y-3">
         {settled.map((s) => (
-          <div key={s.batchId.toString()} className="bg-shield-bg rounded-lg p-3 space-y-2">
+          <div key={s.batchId.toString()} className="bg-shield-bg rounded p-3 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-shield-muted">Batch #{s.batchId.toString()}</span>
-              <span className="text-xs text-shield-muted">{s.buyCount + s.sellCount} orders</span>
+              <span className="font-mono text-[10px] tracking-wider uppercase text-shield-muted">
+                Batch #{s.batchId.toString()}
+              </span>
+              <span className="font-mono text-[10px] tracking-wider text-shield-muted">
+                {s.buyCount + s.sellCount} orders
+              </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-shield-muted">Clearing Price</span>
-              <span className="text-lg font-mono font-bold text-shield-accent tabular-nums">
+              <span className="font-mono text-xs tracking-wider uppercase text-shield-muted">Clearing Price</span>
+              <span className="text-xl font-mono font-bold text-shield-accent tabular-nums">
                 {s.clearingPrice > 0n ? `$${formatPrice(s.clearingPrice)}` : "No cross"}
               </span>
             </div>
-            <div className="flex justify-between text-xs text-shield-muted">
+            <div className="flex justify-between font-mono text-[10px] tracking-wider text-shield-muted">
               <span>Buys: {s.buyCount}</span>
               <span>Sells: {s.sellCount}</span>
             </div>
@@ -123,7 +126,7 @@ export function BatchResult() {
           </div>
         ))}
         {settled.length === 0 && (
-          <p className="text-shield-muted text-sm text-center py-4">No settled batches yet</p>
+          <p className="text-shield-muted text-sm font-mono text-center py-4">No settled batches yet</p>
         )}
       </div>
     </div>

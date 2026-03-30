@@ -20,32 +20,14 @@ export function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between py-4 border-b border-shield-border gap-2">
+    <header className="flex items-center justify-between py-5 border-b border-shield-border/50">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-shield-accent/20 flex items-center justify-center">
-          <svg
-            className="w-5 h-5 text-shield-accent"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-            />
-          </svg>
-        </div>
-        <span className="text-xl font-bold tracking-tight">
-          MEV<span className="text-shield-accent">Shield</span>
-        </span>
-        <span className="hidden sm:inline text-xs text-shield-muted bg-shield-card px-2 py-0.5 rounded">
-          Fhenix
+        <span className="font-mono text-lg font-bold tracking-[0.08em] uppercase">
+          MEV<span className="text-shield-accent">SHIELD</span>
         </span>
         {isConnected && (
-          <span className="text-[10px] text-shield-accent/60 bg-shield-accent/10 px-1.5 py-0.5 rounded flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-shield-accent" />
+          <span className="font-mono text-[10px] tracking-wider uppercase text-shield-accent/60 bg-shield-accent/8 border border-shield-accent/15 px-2 py-0.5 rounded flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-shield-accent animate-pulse-green" />
             Arb Sepolia
           </span>
         )}
@@ -56,17 +38,17 @@ export function Header() {
           <div className="flex items-center gap-2">
             <button
               onClick={copyAddress}
-              className="flex items-center gap-2 bg-shield-card border border-shield-border rounded-lg px-3 py-2 text-sm hover:border-shield-accent/30 transition-colors duration-150 ease-out"
+              className="flex items-center gap-2 bg-shield-card border border-shield-border rounded px-3 py-2 hover:border-shield-accent/30 transition-colors"
               title="Click to copy address"
             >
-              <div className="w-2 h-2 rounded-full bg-shield-accent" />
-              <span className="font-mono text-xs">
-                {copied ? "Copied!" : truncateAddress(address)}
+              <div className="w-1.5 h-1.5 rounded-full bg-shield-accent" />
+              <span className="font-mono text-xs tracking-wide">
+                {copied ? "COPIED" : truncateAddress(address)}
               </span>
             </button>
             <button
               onClick={() => disconnect()}
-              className="bg-shield-card border border-shield-border rounded-lg px-2.5 py-2 text-shield-muted hover:text-shield-red hover:border-shield-red/30 transition-colors duration-150 ease-out"
+              className="bg-shield-card border border-shield-border rounded px-2.5 py-2 text-shield-muted hover:text-shield-pink hover:border-shield-pink/30 transition-colors"
               title="Disconnect"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,7 +62,7 @@ export function Header() {
               <button
                 key={connector.uid}
                 onClick={() => connect({ connector })}
-                className="bg-shield-accent/10 text-shield-accent border border-shield-accent/30 rounded-lg px-4 py-2 text-sm font-medium hover:bg-shield-accent/20 transition-colors duration-150 ease-out"
+                className="font-mono text-xs tracking-[0.1em] uppercase text-shield-accent border border-shield-accent/40 rounded px-5 py-2.5 hover:bg-shield-accent hover:text-shield-bg transition-all"
               >
                 Connect Wallet
               </button>
