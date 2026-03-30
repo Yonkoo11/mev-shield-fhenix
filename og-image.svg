@@ -1,0 +1,31 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0a0a0f"/>
+  <rect x="40" y="40" width="1120" height="550" rx="24" fill="#12121a" stroke="#1e1e2e" stroke-width="2"/>
+
+  <!-- Shield icon -->
+  <g transform="translate(520, 160)">
+    <rect width="160" height="160" rx="32" fill="#00d4aa" opacity="0.1"/>
+    <path d="M80 50 L80 70 M80 50 C60 50 50 60 50 80 L50 100 C50 120 65 130 80 130 C95 130 110 120 110 100 L110 80 C110 60 100 50 80 50 Z"
+          stroke="#00d4aa" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"
+          transform="translate(0, -10)"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="380" text-anchor="middle" fill="#e4e4e7" font-family="system-ui, sans-serif" font-size="64" font-weight="700" letter-spacing="-2">
+    MEV<tspan fill="#00d4aa">Shield</tspan>
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="430" text-anchor="middle" fill="#71717a" font-family="system-ui, sans-serif" font-size="24">
+    Private Batch Auction DEX on Initia
+  </text>
+
+  <!-- Features row -->
+  <text x="320" y="510" text-anchor="middle" fill="#00d4aa" font-family="system-ui, sans-serif" font-size="16" opacity="0.8">Sealed Orders</text>
+  <text x="600" y="510" text-anchor="middle" fill="#00d4aa" font-family="system-ui, sans-serif" font-size="16" opacity="0.8">Uniform Clearing Price</text>
+  <text x="880" y="510" text-anchor="middle" fill="#00d4aa" font-family="system-ui, sans-serif" font-size="16" opacity="0.8">Zero MEV</text>
+
+  <!-- Dots between features -->
+  <circle cx="460" cy="505" r="3" fill="#1e1e2e"/>
+  <circle cx="740" cy="505" r="3" fill="#1e1e2e"/>
+</svg>
