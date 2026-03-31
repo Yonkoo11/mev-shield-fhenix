@@ -68,6 +68,21 @@ export function NoiseAnimation() {
   const showResolved = phase === "resolving" || phase === "clear";
   const showPrice = phase === "clear";
 
+  // Static placeholder matches server render exactly to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="relative bg-shield-card border border-shield-border rounded overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-shield-border bg-shield-bg/50">
+          <div className="w-2 h-2 rounded-full bg-shield-muted" />
+          <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-shield-muted">
+            FHE Batch Processor
+          </span>
+        </div>
+        <div className="p-4 font-mono text-sm min-h-[180px]" />
+      </div>
+    );
+  }
+
   return (
     <div className="relative bg-shield-card border border-shield-border rounded overflow-hidden">
       {/* Header bar */}
@@ -119,7 +134,7 @@ export function NoiseAnimation() {
                 </span>
               ) : (
                 <span className="text-shield-static/50 tracking-wider overflow-hidden">
-                  {mounted && noiseGrid[i]?.map((char, j) => (
+                  {noiseGrid[i]?.map((char, j) => (
                     <span
                       key={j}
                       className="inline-block w-[1.1ch]"
@@ -128,11 +143,9 @@ export function NoiseAnimation() {
                       {char}
                     </span>
                   ))}
-                  {mounted && (
-                    <span className="text-shield-muted/30 ml-2 text-xs">
-                      0x{noiseGrid[i]?.[0] || ""}
-                    </span>
-                  )}
+                  <span className="text-shield-muted/30 ml-2 text-xs">
+                    0x{noiseGrid[i]?.[0] || ""}
+                  </span>
                 </span>
               )}
             </div>
