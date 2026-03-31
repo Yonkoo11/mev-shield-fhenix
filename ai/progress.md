@@ -38,6 +38,9 @@
   3. BridgePanel: unstable useEffect deps (mintA/mintB objects) causing re-renders
   4. Token names: ETH/USDC -> shETH/shUSDC to avoid confusion with real assets
   5. BatchTimer: status enum comment was missing Expired=4
+  6. errors.ts: added missing contract errors (FundsLocked, AlreadyClaimed, etc.)
+  7. OrderForm + DepositPanel: wired parseContractError for real error messages instead of generic "failed"
+- **gh-pages NOT updated** for bugs 6-7 (OOM during build, needs less memory pressure)
 
 ### What's NOT been tested end-to-end
 - cofhejs client-side encryption (encrypt order -> submit -> get fill)
