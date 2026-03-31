@@ -6,6 +6,7 @@ import { parseUnits } from "viem";
 import { useSubmitBuyOrder, useSubmitSellOrder, useBalanceA, useBalanceB } from "../hooks/useBatchAuction";
 import { useCofhe } from "../hooks/useCofhe";
 import { TOKEN_DECIMALS, NUM_TICKS, TOKEN_A_DISPLAY, TOKEN_B_DISPLAY, tickToPrice, formatPrice, PRICE_SCALE } from "../lib/contract";
+import { parseContractError } from "../lib/errors";
 import { useToast } from "./Toast";
 
 interface OrderFormProps {
@@ -36,8 +37,8 @@ export function OrderForm({ batchId, refPrice, tickSpacing }: OrderFormProps) {
       resetBuy();
       resetSell();
     }
-    if (buyError) { toast.error("Order failed"); resetBuy(); }
-    if (sellError) { toast.error("Order failed"); resetSell(); }
+    if (buyError) { toast.error(parseContractError(buyErr)); resetBuy(); }
+    if (sellError) { toast.error(parseContractError(sellErr)); resetSell(); }
   }, [buySuccess, sellSuccess, buyError, sellError, buyErr, sellErr, batchId, resetBuy, resetSell, toast]);
 
   const currentPrice = refPrice && tickSpacing

@@ -18,6 +18,7 @@ import {
   TOKEN_A_DISPLAY,
   TOKEN_B_DISPLAY,
 } from "../lib/contract";
+import { parseContractError } from "../lib/errors";
 import { useToast } from "./Toast";
 
 type Mode = "deposit" | "withdraw";
@@ -31,8 +32,8 @@ export function DepositPanel() {
   const [amountB, setAmountB] = useState("");
   const [approvalStep, setApprovalStep] = useState<ApprovalStep>("idle");
 
-  const { deposit, isPending: depositPending, isSuccess: depositSuccess, isError: depositError, reset: resetDeposit } = useDeposit();
-  const { withdraw, isPending: withdrawPending, isSuccess: withdrawSuccess, isError: withdrawError, reset: resetWithdraw } = useWithdraw();
+  const { deposit, isPending: depositPending, isSuccess: depositSuccess, isError: depositError, error: depositErr, reset: resetDeposit } = useDeposit();
+  const { withdraw, isPending: withdrawPending, isSuccess: withdrawSuccess, isError: withdrawError, error: withdrawErr, reset: resetWithdraw } = useWithdraw();
 
   const { approve: approveA, isPending: approveAPending, isSuccess: approveASuccess, reset: resetApproveA } = useApproveToken(TOKEN_A_ADDRESS);
   const { approve: approveB, isPending: approveBPending, isSuccess: approveBSuccess, reset: resetApproveB } = useApproveToken(TOKEN_B_ADDRESS);
@@ -56,9 +57,9 @@ export function DepositPanel() {
   useEffect(() => {
     if (depositSuccess) { toast.success("Deposit successful!"); setAmountA(""); setAmountB(""); setApprovalStep("idle"); resetDeposit(); }
     if (withdrawSuccess) { toast.success("Withdrawal successful!"); setAmountA(""); setAmountB(""); resetWithdraw(); }
-    if (depositError) { toast.error("Deposit failed"); setApprovalStep("idle"); resetDeposit(); }
-    if (withdrawError) { toast.error("Withdrawal failed"); resetWithdraw(); }
-  }, [depositSuccess, withdrawSuccess, depositError, withdrawError, resetDeposit, resetWithdraw, toast]);
+    if (depositError) { toast.error(parseContractError(depositErr)); setApprovalStep("idle"); resetDeposit(); }
+    if (withdrawError) { toast.error(parseContractError(withdrawErr)); resetWithdraw(); }
+  }, [depositSuccess, withdrawSuccess, depositError, withdrawError, depositErr, withdrawErr, resetDeposit, resetWithdraw, toast]);
 
   useEffect(() => {
     if (approveASuccess && approvalStep === "approveA") {
