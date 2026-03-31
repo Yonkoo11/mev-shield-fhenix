@@ -48,9 +48,12 @@ $600M/year MEV extraction. CoW Protocol proved batch auctions work ($36B volume 
 - Benchmark contract compiles and passes all 4 tests with FHE mocks
 - Price-tick accumulation correctly finds clearing tick for 2+2 and 1+1 order scenarios
 - Compare-swap (gt + select) works correctly on encrypted values
+- Full contract with all 8 bug fixes: 13 tests passing (verified 2026-03-31)
+- Settler bot ran live on Arb Sepolia: opened batches, handled 0-order case, graceful shutdown
+- Frontend builds cleanly (`next build` + `tsc --noEmit` = 0 errors)
+- Deployed to Arb Sepolia at 0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140
 
 ## What's NOT Proven
-- Testnet latency for 200+ FHE operations (the critical unknown)
-- FHERC20 integration for token locking/filling
-- Frontend cofhejs encryption UX
-- Gas costs on real testnet (mock gas is inflated)
+- End-to-end with real wallet: submit encrypted order -> settle -> claim (FHE decrypt on testnet)
+- cofhejs client-side encryption has never been tested live in the frontend
+- Gas costs on real testnet with 200+ FHE ops (mock gas is inflated)
