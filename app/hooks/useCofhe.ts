@@ -18,9 +18,25 @@ async function getCofhe() {
 export function useCofhe() {
   const [state, setState] = useState<CofheState>("uninitialized");
   const [error, setError] = useState<string | null>(null);
+  const [initAddress, setInitAddress] = useState<string | null>(null);
 
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
+
+  // Reset state when wallet changes (disconnect/reconnect/switch)
+  useEffect(() => {
+    const currentAddr = walletClient?.account?.address ?? null;
+    if (initAddress && currentAddr !== initAddress) {
+      setState("uninitialized");
+      setError(null);
+      setInitAddress(null);
+    }
+    if (!walletClient && state !== "uninitialized") {
+      setState("uninitialized");
+      setError(null);
+      setInitAddress(null);
+    }
+  }, [walletClient, initAddress, state]);
 
   // Initialize cofhejs when wallet connects
   useEffect(() => {
@@ -42,6 +58,7 @@ export function useCofhe() {
 
         if (result.success) {
           setState("ready");
+          setInitAddress(walletClient!.account.address);
         } else {
           setState("error");
           setError(String(result.error) || "Failed to initialize cofhejs");
@@ -85,14 +102,14 @@ export function useCofhe() {
 
   // Create a permit for unsealing encrypted values
   const createPermit = useCallback(async () => {
-    if (state !== "ready") {
+    if (state !== "ready" || !walletClient) {
       throw new Error("cofhejs not initialized");
     }
 
     const { cofhejs } = await getCofhe();
     const result = await cofhejs.createPermit({
       type: "self",
-      issuer: walletClient!.account.address,
+      issuer: walletClient.account.address,
     } as any);
 
     if (!result.success) {
@@ -100,7 +117,7 @@ export function useCofhe() {
     }
 
     return result.data;
-  }, [state]);
+  }, [state, walletClient]);
 
   // Unseal an encrypted value (view your own order/fill)
   const unseal = useCallback(

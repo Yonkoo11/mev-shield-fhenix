@@ -37,9 +37,9 @@ export const NUM_TICKS = 8;
 export const MAX_ORDERS_PER_SIDE = 4;
 export const TOKEN_DECIMALS = 18;
 
-// Display names
-export const TOKEN_A_DISPLAY = "ETH";
-export const TOKEN_B_DISPLAY = "USDC";
+// Display names (shielded test tokens, not real ETH/USDC)
+export const TOKEN_A_DISPLAY = "shETH";
+export const TOKEN_B_DISPLAY = "shUSDC";
 
 // -- ABI --
 export const BATCH_AUCTION_ABI = BatchAuctionABI as readonly Record<

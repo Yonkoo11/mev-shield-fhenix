@@ -38,12 +38,12 @@ export function FaucetPanel() {
   useEffect(() => {
     if (mintA.isSuccess) { toast.success(`Minted 1,000 ${TOKEN_A_DISPLAY}`); mintA.reset(); }
     if (mintA.isError) { toast.error(`Failed to mint ${TOKEN_A_DISPLAY}`); mintA.reset(); }
-  }, [mintA.isSuccess, mintA.isError, mintA, toast]);
+  }, [mintA.isSuccess, mintA.isError]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (mintB.isSuccess) { toast.success(`Minted 1,000 ${TOKEN_B_DISPLAY}`); mintB.reset(); }
     if (mintB.isError) { toast.error(`Failed to mint ${TOKEN_B_DISPLAY}`); mintB.reset(); }
-  }, [mintB.isSuccess, mintB.isError, mintB, toast]);
+  }, [mintB.isSuccess, mintB.isError]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!isConnected || !address) return null;
 

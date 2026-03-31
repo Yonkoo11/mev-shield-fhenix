@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 import { useCurrentBatchId, useBatch } from "../hooks/useBatchAuction";
 import { MAX_ORDERS_PER_SIDE } from "../lib/contract";
 
-// Status: 0=None, 1=Open, 2=Settling, 3=Settled
+// Status: 0=None, 1=Open, 2=Settling, 3=Settled, 4=Expired
 
 interface BatchTimerProps {
   onBatchUpdate?: (batchId: bigint | null, status: string, refPrice?: bigint, tickSpacing?: bigint) => void;
