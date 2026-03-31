@@ -1,6 +1,6 @@
 # MEV Shield Fhenix - Progress
 
-## Status: Bug fixes deployed (2026-03-31). 5 frontend bugs fixed. Not end-to-end tested with real FHE.
+## Status: 9 bugs fixed and deployed. Code is solid. Not end-to-end tested with real FHE wallet flow.
 
 ### Deployed Addresses (Arb Sepolia)
 - BatchAuction: `0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140`
@@ -8,46 +8,32 @@
 - TokenB (shUSDC): `0xA0A564D5C2D8c8E01191Cb70E39322E85B1045EF`
 - Deployer: `0xf9946775891a24462cD4ec885d0D4E2675C84355`
 
-### Contract Fixes (BatchAuction.sol) - DONE
-1. `Expired` status (enum value 4)
-2. Token locking: `lockedA/lockedB` mappings, `FundsLocked` error
-3. `claimed` mapping, `AlreadyClaimed` error
-4. No-crossing detection via `FHE.or()` on `encAnyCrossing`
-5. `RefPriceTooLow` arithmetic guard
-6. `fillDecryptRequested` idempotency
-7. `InvalidClearingTick` range guard
-8. Fixed FHE return types: `(uint8, bool)`, `(bool, bool)`, `(uint64, bool)`
+### Contract (BatchAuction.sol) - DONE, 13 tests passing
+8 bug fixes: Expired enum, token locking, claimed mapping, no-crossing detection,
+RefPriceTooLow guard, fillDecryptRequested idempotency, InvalidClearingTick, FHE return types.
 
-### Tests - DONE (13 passing, 1m) - verified 2026-03-31
-- 9 BatchAuction tests (deposit/withdraw, lifecycle, locking, double-claim, expired, refPrice, e2e)
-- 4 Benchmark tests (compare-swap, price-tick accumulation)
+### Settler Bot - DONE
+3-step loop: openBatch -> settle -> finalize. Verified on live contract (prior session).
 
-### Settler Bot - DONE, verified on live contract (prior session)
-- Opened batch #1 on Arb Sepolia, waited 60s, detected 0 orders, skipped correctly
-- Opened batch #2, graceful shutdown on SIGTERM
-
-### Frontend - DEPLOYED (2026-03-31)
+### Frontend - DEPLOYED to gh-pages (2026-03-31)
 - **Live:** https://yonkoo11.github.io/mev-shield-fhenix/
-- **Design:** "Signal & Noise" monospace theme
-- **New:** In-app test token faucet (mint shETH + shUSDC directly)
-- **Build:** `next build` succeeds, `tsc --noEmit` = 0 errors (verified 2026-03-31)
-- Connected-state components styled but NOT tested with a real wallet
-- **Bugs fixed (2026-03-31):**
-  1. useCofhe: FHE state resets on wallet disconnect/switch (was stuck on old wallet)
-  2. useCofhe: createPermit had stale walletClient closure
-  3. BridgePanel: unstable useEffect deps (mintA/mintB objects) causing re-renders
-  4. Token names: ETH/USDC -> shETH/shUSDC to avoid confusion with real assets
-  5. BatchTimer: status enum comment was missing Expired=4
-  6. errors.ts: added missing contract errors (FundsLocked, AlreadyClaimed, etc.)
-  7. OrderForm + DepositPanel: wired parseContractError for real error messages instead of generic "failed"
-- **gh-pages NOT updated** for bugs 6-7 (OOM during build, needs less memory pressure)
+- All 9 bugs fixed and deployed:
+  1. useCofhe: FHE state resets on wallet disconnect/switch
+  2. useCofhe: createPermit stale closure
+  3. BridgePanel: unstable useEffect deps
+  4. Token names: ETH/USDC -> shETH/shUSDC
+  5. BatchTimer: status comment
+  6. errors.ts: added missing contract errors
+  7. OrderForm + DepositPanel: wired parseContractError
+  8. BatchTimer: was faking "settling" when batch just expired with 0 orders
+  9. NoiseAnimation: React hydration error #418/#423 (server/client mismatch)
 
-### What's NOT been tested end-to-end
+### What's NOT been tested
 - cofhejs client-side encryption (encrypt order -> submit -> get fill)
-- FHE decrypt latency on real Arb Sepolia for 200+ ops
-- Actual gas costs for settle() with real FHE (7.2M limit set in settler)
+- Full e2e: two wallets submit orders -> settler settles -> users claim fills
+- FHE decrypt latency and gas on real Arb Sepolia
 
 ### Dev Server Note
-- Use `bun next dev`. `npx next dev` hangs due to Node module resolution on wagmi+walletconnect dep tree.
-- First compile ~90s, subsequent loads ~4s.
-- After `bun install`, node_modules sometimes gets wiped on branch switch. Re-run `bun install` if `next build` says "no such file".
+- Use `bun next dev`. First compile ~90s, subsequent ~4s.
+- `next build` needs ~2GB RAM. Kill other processes if OOM.
+- Re-run `bun install` if node_modules gets wiped on branch switch.
