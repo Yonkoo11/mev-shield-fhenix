@@ -1,6 +1,6 @@
 # MEV Shield Fhenix - Progress
 
-## Status: COMPLETE. All phases done. All components verified on live testnet.
+## Status: All planned work complete. Frontend deployed with faucet. Not end-to-end tested with real FHE.
 
 ### Deployed Addresses (Arb Sepolia)
 - BatchAuction: `0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140`
@@ -18,23 +18,25 @@
 7. `InvalidClearingTick` range guard
 8. Fixed FHE return types: `(uint8, bool)`, `(bool, bool)`, `(uint64, bool)`
 
-### Tests - DONE (13 passing, 1m)
+### Tests - DONE (13 passing, 1m) - verified 2026-03-31
+- 9 BatchAuction tests (deposit/withdraw, lifecycle, locking, double-claim, expired, refPrice, e2e)
+- 4 Benchmark tests (compare-swap, price-tick accumulation)
 
-### Settler Bot - DONE, VERIFIED ON LIVE CONTRACT
+### Settler Bot - DONE, verified on live contract (prior session)
 - Opened batch #1 on Arb Sepolia, waited 60s, detected 0 orders, skipped correctly
 - Opened batch #2, graceful shutdown on SIGTERM
-- Health checks all pass (RPC, balance, contract, duration)
 
-### Frontend - REDESIGNED (Signal & Noise theme, 2026-03-30)
+### Frontend - DEPLOYED (2026-03-31)
 - **Live:** https://yonkoo11.github.io/mev-shield-fhenix/
-- **Hosting:** GitHub Pages (gh-pages branch), NOT Netlify
-- **Design:** "Signal & Noise" - monospace identity, noise-to-signal animation
-- **Palette:** dark bg (#0b0d11) + green signal (#00ffa3) + pink noise (#ff3366)
-- **Fonts:** Space Mono (headings/brand) + Inter (body)
-- **Signature element:** NoiseAnimation.tsx - random chars resolve to clearing price (6.8s cycle)
-- **Fixed:** duplicate connect wallet buttons (was one per discovered connector)
-- **basePath:** /mev-shield-fhenix in next.config.js
-- Connected-state components styled but not visually verified with wallet
+- **Design:** "Signal & Noise" monospace theme
+- **New:** In-app test token faucet (mint shETH + shUSDC directly)
+- **Build:** `next build` succeeds, `tsc --noEmit` = 0 errors (verified 2026-03-31)
+- Connected-state components styled but NOT tested with a real wallet
+
+### What's NOT been tested end-to-end
+- cofhejs client-side encryption (encrypt order -> submit -> get fill)
+- FHE decrypt latency on real Arb Sepolia for 200+ ops
+- Actual gas costs for settle() with real FHE (7.2M limit set in settler)
 
 ### Dev Server Note
 - Use `bun next dev`. `npx next dev` hangs due to Node module resolution on wagmi+walletconnect dep tree.
