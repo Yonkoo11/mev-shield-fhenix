@@ -1,6 +1,6 @@
 # MEV Shield Fhenix - Progress
 
-## Status: All planned work complete. Frontend deployed with faucet. Not end-to-end tested with real FHE.
+## Status: Bug fixes deployed (2026-03-31). 5 frontend bugs fixed. Not end-to-end tested with real FHE.
 
 ### Deployed Addresses (Arb Sepolia)
 - BatchAuction: `0x5200B4fD4aD39b8b8f0A3cD127746F83d94E2140`
@@ -32,6 +32,12 @@
 - **New:** In-app test token faucet (mint shETH + shUSDC directly)
 - **Build:** `next build` succeeds, `tsc --noEmit` = 0 errors (verified 2026-03-31)
 - Connected-state components styled but NOT tested with a real wallet
+- **Bugs fixed (2026-03-31):**
+  1. useCofhe: FHE state resets on wallet disconnect/switch (was stuck on old wallet)
+  2. useCofhe: createPermit had stale walletClient closure
+  3. BridgePanel: unstable useEffect deps (mintA/mintB objects) causing re-renders
+  4. Token names: ETH/USDC -> shETH/shUSDC to avoid confusion with real assets
+  5. BatchTimer: status enum comment was missing Expired=4
 
 ### What's NOT been tested end-to-end
 - cofhejs client-side encryption (encrypt order -> submit -> get fill)
