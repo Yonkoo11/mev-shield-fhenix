@@ -5,7 +5,8 @@
 - **Sponsor:** Fhenix (FHE protocol)
 - **URL:** https://app.akindo.io/wave-hacks/Nm2qjzEBgCqJD90W
 - **Grant Pool:** 50,000 USDC on Arbitrum
-- **Wave 1 Deadline:** ~March 30, 2026
+- **Wave 1 Deadline:** ~March 30, 2026 (submitted)
+- **Wave 2 Start:** April 4, 2026
 - **Waves:** 5 total (March 20 - June 5)
 - **Track:** Confidential DeFi (sealed-bid auctions, MEV-protected execution)
 - **Judging:** Privacy Architecture, Innovation & Originality, UX, Technical Execution, Market Potential
